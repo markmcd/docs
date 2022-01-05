@@ -870,11 +870,7 @@ class DocGenerator:
           str(work_py_dir / self._short_name.replace('.', '/') /
               '_api_cache.json'))
 
-    try:
-      os.makedirs(output_dir)
-    except OSError as e:
-      if e.strerror != 'File exists':
-        raise
+    os.makedirs(output_dir, exist_ok=True)
 
     # Typical results are something like:
     #
@@ -897,4 +893,4 @@ class DocGenerator:
         shutil.copy2(work_path, out_path)
       elif work_path.is_dir():
         shutil.rmtree(out_path, ignore_errors=True)
-        shutil.copytree(work_path, out_path)
+        shutil.copytree(work_path, out_path, dirs_exist_ok=True)
